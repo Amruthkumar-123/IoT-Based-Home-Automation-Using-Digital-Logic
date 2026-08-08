@@ -2,103 +2,200 @@
 
 ## Project Overview
 
-This project presents an IoT-based home automation system combining
-sensor interfacing, microcontroller control, digital logic, Wi-Fi-based
-remote control, and power optimization.
+This project presents an IoT-based home automation system developed using an ESP32 microcontroller.
 
-The system uses an ESP32 microcontroller to interface with sensors and
-actuators. Environmental and motion information is obtained using
-DHT22, PIR, and LDR sensors. Electrical loads are controlled through
-relay modules.
+The system allows electrical appliances to be controlled remotely through the Blynk IoT platform. Environmental conditions are monitored using a DHT22 temperature and humidity sensor, while a PIR sensor and LDR are used for automatic control functions.
 
-A Verilog-based digital control block is additionally developed to
-implement the home automation decision logic. The digital logic is
-simulated and synthesized using AMD Vivado.
+An I2C LCD provides real-time information about appliance status, temperature, humidity, and lighting status.
 
-## Objectives
+The project was developed and simulated using Wokwi.
 
-- Interface sensors and actuators using digital circuits.
-- Use a microcontroller for home automation.
-- Provide remote control using Wi-Fi.
-- Implement basic digital/VLSI control logic using Verilog.
-- Implement power-saving operation.
-- Simulate and verify the complete system.
+---
 
-## System Components
+## Author
 
-### Hardware / Simulation Components
+**Amruth Kumar Ronanki**
 
-- ESP32
+B.Tech – Electrical and Electronics Engineering
+
+---
+
+## Features
+
+- IoT-based appliance control
+- ESP32-based control system
+- Four relay-controlled appliances
+- Remote control using Blynk
+- Temperature monitoring using DHT22
+- Humidity monitoring using DHT22
+- PIR-based motion detection
+- LDR-based outdoor light control
+- I2C LCD status display
+- LED-based motion indication
+- Wi-Fi connectivity
+- Digital logic-based control
+- Simulation using Wokwi
+
+---
+
+## Components Used
+
+### Controller
+
+- ESP32 DevKit V1
+
+### Sensors
+
 - DHT22 Temperature and Humidity Sensor
 - PIR Motion Sensor
-- LDR Sensor
-- Relay Modules
-- LEDs
-- I2C LCD
-- Breadboards
+- LDR / Photoresistor Sensor
 
-### Software Tools
+### Actuators
+
+- 4-Channel Relay Modules
+- LED
+
+### Display
+
+- 20x4 I2C LCD
+
+### Other Components
+
+- Breadboards
+- Jumper wires
+- Power connections
+
+---
+
+## Pin Configuration
+
+| Component | ESP32 Pin |
+|-----------|-----------|
+| Relay 1 | GPIO 5 |
+| Relay 2 | GPIO 18 |
+| Relay 3 | GPIO 19 |
+| Relay 4 | GPIO 4 |
+| LDR | GPIO 23 |
+| Outdoor Light | GPIO 2 |
+| PIR Sensor | GPIO 27 |
+| Motion LED | GPIO 33 |
+| DHT22 | GPIO 15 |
+| LCD SDA | GPIO 21 |
+| LCD SCL | GPIO 22 |
+
+---
+
+## Blynk Virtual Pins
+
+| Virtual Pin | Function |
+|-------------|----------|
+| V0 | Relay 1 |
+| V1 | Relay 2 |
+| V2 | Relay 3 |
+| V3 | Relay 4 |
+| V4 | Outdoor Light |
+| V5 | Temperature |
+| V6 | Humidity |
+| V7 | PIR / Motion Control |
+
+---
+
+## Working Principle
+
+The ESP32 acts as the central controller of the home automation system.
+
+The DHT22 sensor measures temperature and humidity. The measured values are sent to the Blynk IoT platform and displayed on the LCD.
+
+The Blynk application provides virtual controls for the relay modules. When a user changes a control in the Blynk application, the corresponding ESP32 GPIO pin is activated or deactivated.
+
+The PIR sensor detects motion and controls the motion-indicator LED.
+
+The LDR is used for light-dependent control of the outdoor lighting system.
+
+The LCD continuously displays appliance states and environmental information.
+
+---
+
+## System Operation
+
+### 1. Appliance Control
+
+The four relay modules are controlled through Blynk virtual pins V0-V3.
+
+Each relay can be switched ON or OFF remotely.
+
+### 2. Outdoor Light Control
+
+The LDR detects the lighting condition.
+
+The ESP32 reads the LDR signal and controls the outdoor light accordingly.
+
+### 3. Motion Detection
+
+The PIR sensor detects human movement.
+
+When motion is detected, the ESP32 activates the indicator LED.
+
+### 4. Temperature Monitoring
+
+The DHT22 measures the surrounding temperature.
+
+The temperature value is displayed on the LCD and transmitted to Blynk through virtual pin V5.
+
+### 5. Humidity Monitoring
+
+The DHT22 also measures humidity.
+
+The humidity value is displayed on the LCD and transmitted to Blynk through virtual pin V6.
+
+---
+
+## Software Used
 
 - Wokwi
-- Arduino IDE / Wokwi Arduino Environment
+- Arduino-compatible ESP32 programming environment
 - Blynk IoT
-- Verilog
-- AMD Vivado
-- MATLAB / GNU Octave
+- C/C++ for ESP32
+- GitHub
 
-## System Architecture
+---
 
-DHT22, PIR and LDR sensors provide input information to the ESP32.
+## Libraries Used
 
-The ESP32 processes the sensor information and controls the connected
-loads through relay modules.
+The project uses the following libraries:
 
-Wi-Fi connectivity provides remote control through the Blynk IoT
-platform.
+- LiquidCrystal I2C
+- WiFi
+- WiFiClient
+- BlynkSimpleEsp32
+- DHTesp
 
-A separate Verilog digital control block implements the automation
-decision logic and power-saving control.
+---
 
-## Block Diagram
+## Simulation
 
-```text
-              ┌──────────────────┐
-              │      DHT22       │
-              │ Temperature/Humi │
-              └────────┬─────────┘
-                       │
-                       │
-┌──────────────┐       │
-│ PIR Sensor   │───────┤
-└──────────────┘       │
-                       ▼
-┌──────────────┐   ┌───────────────┐
-│ LDR Sensor   │──►│     ESP32     │
-└──────────────┘   │ Microcontroller│
-                   └───────┬───────┘
-                           │
-                  ┌────────┴────────┐
-                  │                 │
-                  ▼                 ▼
-             ┌─────────┐      ┌──────────┐
-             │ Relays  │      │ I2C LCD  │
-             └────┬────┘      └──────────┘
-                  │
-                  ▼
-             Home Loads
+The complete circuit was designed and simulated using Wokwi.
+
+The simulation includes:
+
+- ESP32
+- DHT22
+- PIR sensor
+- LDR
+- Relay modules
+- I2C LCD
+- LED
+- Breadboards
+
+See `Circuit.png` for the circuit implementation.
+
+---
+
+## Project Files
 
 
-                 Wi-Fi
-                   │
-                   ▼
-             ┌──────────┐
-             │  Blynk   │
-             │   App    │
-             └──────────┘
-
-
-             Verilog Digital Logic
-             ┌────────────────────┐
-             │ Automation Control │
-             │   + Power Saving   │
-             └────────────────────┘
+IoT-Based-Home-Automation/
+│
+├── Home_Automation.ino
+├── diagram.png
+└── README.md
