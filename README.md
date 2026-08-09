@@ -1,281 +1,244 @@
-# VLSI Design of FIR Filter for DSP Applications
+# IoT-Based Home Automation Using Digital Logic
 
 ## Project Overview
 
-This project implements an **8-tap Finite Impulse Response (FIR) filter** using Verilog HDL for digital signal processing applications.
+This project presents an IoT-based home automation system developed using an ESP32 microcontroller.
 
-The FIR filter is designed using a shift-register-based architecture with predefined symmetric filter coefficients. MATLAB is used for coefficient generation and analysis, while **AMD Vivado** is used for RTL design and simulation.
+The system allows electrical appliances to be controlled remotely through the Blynk IoT platform. Environmental conditions are monitored using a DHT22 temperature and humidity sensor, while a PIR sensor and LDR are used for automatic control functions.
 
-A Verilog testbench is developed to apply input samples and verify the FIR filter output through simulation waveforms.
+An I2C LCD provides real-time information about appliance status, temperature, humidity, and lighting status.
 
-The project demonstrates the basic VLSI design flow from **FIR coefficient generation to Verilog RTL implementation and functional simulation**.
-## Objectives
+The project was developed and simulated using Wokwi.
 
-- To design an 8-tap FIR filter for digital signal processing applications.
-- To generate and analyze FIR filter coefficients using MATLAB.
-- To implement the FIR filter using Verilog HDL.
-- To develop a shift-register-based FIR filter architecture.
-- To create a Verilog testbench for functional verification.
-- To simulate the FIR filter design using AMD Vivado.
-- To observe and analyze the input and output waveforms.
-- To study basic VLSI design considerations such as area, speed, and power.
-- To understand the FPGA/ASIC-oriented RTL design flow for digital signal processing applications.
-## Project Requirements
+---
 
-The project follows the requirements for **VLSI Design of FIR Filter for DSP Applications**.
+## Author
 
-### Requirements
+**Amruth Kumar Ronanki**
 
-- Generate FIR filter coefficients using MATLAB.
-- Implement the FIR filter using Verilog HDL.
-- Develop a suitable Verilog testbench.
-- Simulate the design using an FPGA/ASIC design tool.
-- Verify the FIR filter functionality using simulation waveforms.
-- Study the design in terms of area, speed, and power considerations.
-## Tools and Technologies
-
-| Tool / Technology | Purpose |
-|---|---|
-| MATLAB | FIR coefficient generation and analysis |
-| Verilog HDL | FIR filter RTL implementation |
-| AMD Vivado | RTL simulation and waveform verification |
-| FPGA/ASIC Design Concepts | VLSI-oriented digital hardware design |
-## FIR Filter Specifications
-
-| Parameter | Specification |
-|---|---|
-| Filter Type | Finite Impulse Response (FIR) |
-| Number of Taps | 8 |
-| Input Width | 16-bit signed |
-| Output Width | 32-bit signed |
-| HDL | Verilog |
-| Coefficient Generation | MATLAB |
-| Simulation Tool | AMD Vivado |
-| Clock Period | 10 ns |
-| Clock Frequency | 100 MHz |
-| Architecture | Shift-Register Based |
-| Coefficients | 1, 6, 21, 36, 36, 21, 6, 1 |
-## FIR Filter Equation
+B.Tech – Electrical and Electronics Engineering
 
-A Finite Impulse Response (FIR) filter produces an output based on the current input sample and a finite number of previous input samples.
+---
 
-The general FIR filter equation is:
+## Features
 
-y[n] = Σ h[k] × x[n-k]
+- IoT-based appliance control
+- ESP32-based control system
+- Four relay-controlled appliances
+- Remote control using Blynk
+- Temperature monitoring using DHT22
+- Humidity monitoring using DHT22
+- PIR-based motion detection
+- LDR-based outdoor light control
+- I2C LCD status display
+- LED-based motion indication
+- Wi-Fi connectivity
+- Digital logic-based control
+- Simulation using Wokwi
 
-For the implemented 8-tap FIR filter:
+---
 
-y[n] = h0×x[n] + h1×x[n-1] + h2×x[n-2] + h3×x[n-3]
-     + h4×x[n-4] + h5×x[n-5] + h6×x[n-6] + h7×x[n-7]
+## Components Used
 
-where:
+### Controller
 
-- x[n] represents the input samples.
-- y[n] represents the filtered output.
-- h[k] represents the FIR filter coefficients.
-- n represents the current sample index.
+- ESP32 DevKit V1
 
-The coefficients used in this project are:
+### Sensors
 
-[1, 6, 21, 36, 36, 21, 6, 1]
-## FIR Filter Coefficients
+- DHT22 Temperature and Humidity Sensor
+- PIR Motion Sensor
+- LDR / Photoresistor Sensor
 
-The FIR filter uses the following 8 coefficients:
+### Actuators
 
+- 4-Channel Relay Modules
+- LED
 
-h0 = 1
-h1 = 6
-h2 = 21
-h3 = 36
-h4 = 36
-h5 = 21
-h6 = 6
-h7 = 1
+### Display
 
-## MATLAB Coefficient Generation
+- 20x4 I2C LCD
 
-MATLAB is used to define and analyze the FIR filter coefficients used in the Verilog implementation.
+### Other Components
 
-The coefficient sequence used in this project is:
+- Breadboards
+- Jumper wires
+- Power connections
 
-[1 6 21 36 36 21 6 1]
+---
 
-## FIR Filter Architecture
+## Pin Configuration
 
-The implemented FIR filter uses a **shift-register-based architecture**.
+| Component | ESP32 Pin |
+|-----------|-----------|
+| Relay 1 | GPIO 5 |
+| Relay 2 | GPIO 18 |
+| Relay 3 | GPIO 19 |
+| Relay 4 | GPIO 4 |
+| LDR | GPIO 23 |
+| Outdoor Light | GPIO 2 |
+| PIR Sensor | GPIO 27 |
+| Motion LED | GPIO 33 |
+| DHT22 | GPIO 15 |
+| LCD SDA | GPIO 21 |
+| LCD SCL | GPIO 22 |
 
-The main functional blocks are:
+---
 
-1. Input sample (`x_in`)
-2. 8-stage shift register
-3. FIR coefficient multiplication
-4. Accumulation of multiplication results
-5. Registered output (`y_out`)
+## Blynk Virtual Pins
 
-### Block Diagram
-                    FIR FILTER
+| Virtual Pin | Function |
+|-------------|----------|
+| V0 | Relay 1 |
+| V1 | Relay 2 |
+| V2 | Relay 3 |
+| V3 | Relay 4 |
+| V4 | Outdoor Light |
+| V5 | Temperature |
+| V6 | Humidity |
+| V7 | PIR / Motion Control |
 
-                     x_in
-                       |
-                       v
-              +----------------+
-              |  Shift Register |
-              |   8 Stages      |
-              +----------------+
-                | | | | | | | |
-                v v v v v v v v
-               × × × × × × × ×
-               | | | | | | | |
-              h0 h1 h2 h3 h4 h5 h6 h7
-                \ \ \ \ | / / /
-                 \ \ \ \|/ / /
-                  +-----------+
-                  |    Adder  |
-                  |    /      |
-                  +-----------+
-                       |
-                       v
-                     y_out
+---
 
-## Verilog RTL Implementation
+## Working Principle
 
-The FIR filter is implemented using Verilog HDL.
+The ESP32 acts as the central controller of the home automation system.
 
-The main design file is:
+The DHT22 sensor measures temperature and humidity. The measured values are sent to the Blynk IoT platform and displayed on the LCD.
 
+The Blynk application provides virtual controls for the relay modules. When a user changes a control in the Blynk application, the corresponding ESP32 GPIO pin is activated or deactivated.
 
-fir_filter.v
+The PIR sensor detects motion and controls the motion-indicator LED.
 
-## Verilog Testbench
+The LDR is used for light-dependent control of the outdoor lighting system.
 
-The FIR filter is verified using a dedicated Verilog testbench.
+The LCD continuously displays appliance states and environmental information.
 
-The testbench file is:
+---
 
-fir_filter_tb.v
+## System Operation
 
-### Input Sequence
+### 1. Appliance Control
 
-The following input samples are applied to the FIR filter during simulation:
+The four relay modules are controlled through Blynk virtual pins V0-V3.
 
-10
-20
-30
-40
-50
-60
-70
-80
-90
-100
-0
-## Vivado Simulation
+Each relay can be switched ON or OFF remotely.
 
-The FIR filter RTL design is simulated using **AMD Vivado**.
+### 2. Outdoor Light Control
 
-The simulation verifies the behavior of the FIR filter by applying the testbench input samples and observing the resulting output signal.
+The LDR detects the lighting condition.
 
-The following signals are observed during simulation:
+The ESP32 reads the LDR signal and controls the outdoor light accordingly.
 
-- `clk` – Clock signal
-- `rst` – Reset signal
-- `x_in` – FIR input sample
-- `y_out` – FIR filtered output
+### 3. Motion Detection
 
-The simulation waveform is used to verify the timing and functional behavior of the FIR filter.
-## Simulation Results
+The PIR sensor detects human movement.
 
-The simulation confirms that the FIR filter operates correctly.
+When motion is detected, the ESP32 activates the indicator LED.
 
-Initially, the output remains zero while the reset signal is active. After the reset is released, the input samples are shifted through the 8-stage delay line.
+### 4. Temperature Monitoring
 
-As successive input samples enter the filter, each stored sample is multiplied by its corresponding FIR coefficient and the products are accumulated to generate the output.
+The DHT22 measures the surrounding temperature.
 
-The output response increases as more input samples contribute to the FIR calculation, demonstrating the expected behavior of the 8-tap FIR filter.
-## Simulation Waveform
+The temperature value is displayed on the LCD and transmitted to Blynk through virtual pin V5.
 
-The FIR filter simulation waveform can be observed in AMD Vivado by monitoring the clock, reset, input, and output signals.
+### 5. Humidity Monitoring
 
-The main signals are:
-clk
-rst
-x_in
-y_out
+The DHT22 also measures humidity.
 
-## Design Considerations: Area, Speed and Power
+The humidity value is displayed on the LCD and transmitted to Blynk through virtual pin V6.
 
-The FIR filter design involves three important VLSI design parameters: area, speed, and power.
+---
 
-### Area
+## Software Used
 
-The basic FIR implementation requires:
+- Wokwi
+- Arduino-compatible ESP32 programming environment
+- Blynk IoT
+- C/C++ for ESP32
+- GitHub
 
-- Shift registers for storing input samples.
-- Multiplication operations for the filter coefficients.
-- Addition logic for accumulating the multiplication results.
-- Control and reset logic.
+---
 
-The actual FPGA resource utilization depends on the target FPGA device and synthesis results.
+## Libraries Used
 
-### Speed
+The project uses the following libraries:
 
-The testbench uses a 10 ns clock period, corresponding to a nominal clock frequency of 100 MHz.
+- LiquidCrystal I2C
+- WiFi
+- WiFiClient
+- BlynkSimpleEsp32
+- DHTesp
 
-The maximum operating frequency of the synthesized design depends on the target FPGA, logic depth, routing, and implementation architecture.
+---
 
-### Power
+## Simulation
 
-Power consumption depends on clock frequency, switching activity, logic utilization, and the target FPGA technology.
+The complete circuit was designed and simulated using Wokwi.
 
-Power can potentially be reduced using techniques such as coefficient optimization, reduced switching activity, resource sharing, and pipelining.
+The simulation includes:
 
-Actual area, timing, and power values can be obtained by performing synthesis, implementation, timing analysis, and power analysis in Vivado.
+- ESP32
+- DHT22
+- PIR sensor
+- LDR
+- Relay modules
+- I2C LCD
+- LED
+- Breadboards
+
+See `Circuit.png` for the circuit implementation.
+
+---
+
+## Project Files
+
+
+IoT-Based-Home-Automation/
+│
+├── Home_Automation.ino
+├── diagram.json
+├── Circuit.png
+└── README.md
+
 ## Applications
 
-FIR filters are widely used in digital signal processing and VLSI-based systems.
+This IoT-based home automation system can be used in:
 
-Some common applications include:
+- Smart homes
+- Remote appliance control
+- Automatic lighting systems
+- Security monitoring
+- Environmental monitoring
+- Energy management
+- IoT-based building automation
 
-- Audio and speech signal processing
-- Noise reduction and signal filtering
-- Digital communication systems
-- Wireless communication
-- Biomedical signal processing
-- Sensor signal conditioning
-- Image and video processing
-- Software-defined radio
-- Embedded DSP systems
+---
+
 ## Future Improvements
 
-The FIR filter can be further improved in the following ways:
+The system can be further enhanced by adding:
 
-- Implement coefficient symmetry to reduce the number of multipliers.
-- Increase the number of filter taps for improved filtering performance.
-- Implement a pipelined FIR architecture to improve operating speed.
-- Compare direct-form and transposed-form FIR architectures.
-- Perform FPGA synthesis and analyze LUT, flip-flop, and DSP utilization.
-- Perform detailed timing analysis to determine the maximum operating frequency.
-- Perform power analysis using Vivado.
-- Compare area, speed, and power for different FIR architectures.
-- Compare the Verilog output with MATLAB simulation results.
-- Implement the design on a physical FPGA development board.
+- Energy consumption monitoring
+- Automatic fan speed control
+- Mobile notifications
+- Voice-controlled appliances
+- Overcurrent and overload protection
+- Real-time power monitoring
+- Additional environmental sensors
+- AI-based occupancy detection
+
+---
+
 ## Conclusion
 
-An 8-tap Finite Impulse Response (FIR) filter was designed using Verilog HDL for digital signal processing applications.
+This project demonstrates the integration of IoT, digital control, sensors, actuators, and wireless communication for home automation.
 
-The filter uses the coefficient set:
+The ESP32 acts as the central controller, while Blynk provides remote monitoring and control. The integration of PIR, LDR, DHT22, relay modules, and an I2C LCD provides a practical platform for smart home automation.
 
-[1, 6, 21, 36, 36, 21, 6, 1]
+The project was successfully designed and simulated using Wokwi.
 
-## Project Structure
-
-VLSI-Design-of-FIR-Filter/
-│
-├── README.md
-├── fir_filter.v
-├── fir_filter_tb.v
-├── fir_coefficients.m
-└── FIR_Filter_Graphs.png
+---
 
 ## Author
 
